@@ -1,0 +1,156 @@
+/* General Body and Container Styles */
+body {
+    font-family: 'Inter', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f8f8; /* Light background to mimic Wise */
+    color: #333;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Header Styles */
+.header {
+    background-color: #fff;
+    padding: 15px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo-text {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333; /* Or a color that fits the theme */
+}
+
+.nav {
+    display: flex;
+    align-items: center;
+}
+
+.register-btn {
+    background-color: #00b96b; /* Wise green */
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-right: 15px;
+    transition: background-color 0.3s ease;
+}
+
+.register-btn:hover {
+    background-color: #009e5a;
+}
+
+.menu-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 30px;
+    height: 20px;
+}
+
+.hamburger {
+    width: 100%;
+    height: 2px;
+    background-color: #333;
+    border-radius: 2px;
+}
+
+/* Hero Section Styles */
+.hero {
+    background-color: #fff;
+    padding: 80px 0;
+    text-align: center;
+}
+
+.hero h1 {
+    font-size: 3.5em;
+    margin-bottom: 20px;
+    color: #222;
+    font-weight: 700;
+    line-height: 1.1;
+}
+
+.hero p {
+    font-size: 1.2em;
+    max-width: 700px;
+    margin: 0 auto 30px auto;
+    color: #555;
+}
+
+.open-account-btn {
+    background-color: #00b96b; /* Wise green */
+    color: #fff;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1.1em;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.open-account-btn:hover {
+    background-color: #009e5a;
+}
+
+/* Countdown Section Styles */
+.countdown-section {
+    padding: 50px 0;
+    background-color: #f0f2f5; /* Consistent with previous section background */
+    text-align: center;
+}
+
+.countdown-section h2 {
+    font-size: 2.5em;
+    margin-bottom: 40px;
+    color: #222;
+}
+
+.card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.countdown-card h3 {
+    font-size: 1.8em;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.countdown-display {
+    font-size: 2em;
+    font-weight: bold;
+    color: #00b96b; /* Wise green for emphasis */
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.countdown-display span {
+    font-size: 1.5em; /* Make numbers slightly larger */
+    color: #222;
+}
