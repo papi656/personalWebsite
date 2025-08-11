@@ -141,16 +141,47 @@ body {
 }
 
 .countdown-display {
-    font-size: 2em;
-    font-weight: bold;
-    color: #00b96b; /* Wise green for emphasis */
     display: flex;
     justify-content: center;
-    gap: 15px;
+    gap: 20px; /* Increased gap for better separation */
     flex-wrap: wrap;
+    font-weight: bold;
 }
 
-.countdown-display span {
-    font-size: 1.5em; /* Make numbers slightly larger */
-    color: #222;
+.countdown-item {
+    display: flex;
+    flex-direction: column; /* Stack value and label vertically */
+    align-items: center; /* Center horizontally */
+}
+
+.countdown-item .value {
+    font-size: 3em; /* Larger numbers */
+    font-weight: 700;
+    line-height: 1; /* Adjust line height to prevent extra space */
+    background: linear-gradient(to right, #FFA500, #FFD700); /* Orange to Yellow gradient */
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent; /* Fallback for browsers that don't support background-clip */
+}
+
+.countdown-item .label {
+    font-size: 0.8em; /* Smaller text */
+    color: #00b96b; /* Wise green for labels */
+    text-transform: uppercase;
+    margin-top: 5px; /* Space between number and label */
+}
+
+/* Footer Styles */
+footer {
+    background-color: #333; /* Dark background for contrast */
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+    font-size: 0.9em;
+    margin-top: 50px; /* Space above footer */
+}
+
+footer p {
+    margin: 0;
 }
