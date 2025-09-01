@@ -94,6 +94,12 @@ body.dark-mode .sun-icon {
     stroke: #fff;
 }
 
+/* Ensure SVG icons have proper stroke */
+.moon-icon,
+.sun-icon {
+    stroke: currentColor;
+}
+
 /* Introduction Section Styles */
 .intro {
     padding: 60px 0;

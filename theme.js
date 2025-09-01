@@ -1,5 +1,6 @@
 // Theme toggle functionality
 document.addEventListener('DOMContentLoaded', () => {
+    console.log('Theme toggle script loaded');
     const themeToggle = document.querySelector('.theme-toggle');
     const moonIcon = document.querySelector('.moon-icon');
     const sunIcon = document.querySelector('.sun-icon');
