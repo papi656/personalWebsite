@@ -6,6 +6,9 @@ body {
     background-color: #f8f8f8; /* Light background to mimic Wise */
     color: #333;
     line-height: 1.6;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 .container {
@@ -33,144 +36,130 @@ body {
     color: #333; /* Or a color that fits the theme */
 }
 
-.nav {
-    display: flex;
-    align-items: center;
-}
-
-.register-btn {
-    background-color: #00b96b; /* Wise green */
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 20px;
-    cursor: pointer;
-    font-weight: bold;
-    margin-right: 15px;
-    transition: background-color 0.3s ease;
-}
-
-.register-btn:hover {
-    background-color: #009e5a;
-}
-
-.menu-toggle {
+.theme-toggle {
     background: none;
     border: none;
     cursor: pointer;
-    padding: 5px;
+    padding: 8px;
+    border-radius: 50%;
+    transition: background-color 0.3s ease;
+    font-size: 1.2em;
+}
+
+.theme-toggle:hover {
+    background-color: #f0f0f0;
+}
+
+/* Dark Mode Styles */
+body.dark-mode {
+    background-color: #1a1a1a;
+    color: #fff;
+}
+
+body.dark-mode .header {
+    background-color: #2d2d2d;
+    border-bottom-color: #444;
+}
+
+body.dark-mode .logo-text {
+    color: #fff;
+}
+
+body.dark-mode .intro p {
+    color: #ccc;
+}
+
+body.dark-mode .social-link {
+    background-color: #2d2d2d;
+    color: #00b96b;
+    border-color: #00b96b;
+}
+
+body.dark-mode .social-link:hover {
+    background-color: #00b96b;
+    color: #2d2d2d;
+}
+
+body.dark-mode footer {
+    background-color: #1a1a1a;
+    border-top: 1px solid #444;
+}
+
+body.dark-mode .theme-toggle:hover {
+    background-color: #444;
+}
+
+/* Make sun icon white in dark mode for better visibility */
+body.dark-mode .sun-icon {
+    stroke: #fff;
+}
+
+/* Introduction Section Styles */
+.intro {
+    padding: 60px 0;
+    flex: 1; /* Take up available space to push footer down */
+}
+
+.intro-content {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
-    width: 30px;
-    height: 20px;
-}
-
-.hamburger {
-    width: 100%;
-    height: 2px;
-    background-color: #333;
-    border-radius: 2px;
-}
-
-/* Hero Section Styles */
-.hero {
-    background-color: #fff;
-    padding: 80px 0;
-    text-align: center;
-}
-
-.hero h1 {
-    font-size: 3.5em;
-    margin-bottom: 20px;
-    color: #222;
-    font-weight: 700;
-    line-height: 1.1;
-}
-
-.hero p {
-    font-size: 1.2em;
-    max-width: 700px;
-    margin: 0 auto 30px auto;
-    color: #555;
-}
-
-.open-account-btn {
-    background-color: #00b96b; /* Wise green */
-    color: #fff;
-    border: none;
-    padding: 15px 30px;
-    border-radius: 25px;
-    cursor: pointer;
-    font-size: 1.1em;
-    font-weight: bold;
-    transition: background-color 0.3s ease;
-}
-
-.open-account-btn:hover {
-    background-color: #009e5a;
-}
-
-/* Countdown Section Styles */
-.countdown-section {
-    padding: 50px 0;
-    background-color: #f0f2f5; /* Consistent with previous section background */
-    text-align: center;
-}
-
-.countdown-section h2 {
-    font-size: 2.5em;
-    margin-bottom: 40px;
-    color: #222;
-}
-
-.card {
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    padding: 30px;
-    max-width: 600px;
+    align-items: center;
+    gap: 30px;
+    max-width: 800px;
     margin: 0 auto;
+}
+
+.profile-image {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 4px solid #00b96b; /* Wise green border */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.profile-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.intro p {
+    font-size: 1.2em;
+    line-height: 1.8;
     text-align: center;
+    color: #555;
+    margin: 0 0 30px 0;
 }
 
-.countdown-card h3 {
-    font-size: 1.8em;
-    margin-bottom: 20px;
-    color: #333;
-}
-
-.countdown-display {
+.social-links {
     display: flex;
+    gap: 20px;
     justify-content: center;
-    gap: 20px; /* Increased gap for better separation */
     flex-wrap: wrap;
-    font-weight: bold;
 }
 
-.countdown-item {
-    display: flex;
-    flex-direction: column; /* Stack value and label vertically */
-    align-items: center; /* Center horizontally */
+.social-link {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: #fff;
+    color: #00b96b; /* Wise green */
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: 2px solid #00b96b;
 }
 
-.countdown-item .value {
-    font-size: 3em; /* Larger numbers */
-    font-weight: 700;
-    line-height: 1; /* Adjust line height to prevent extra space */
-    background: linear-gradient(to right, #FFA500, #FFD700); /* Orange to Yellow gradient */
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    color: transparent; /* Fallback for browsers that don't support background-clip */
+.social-link:hover {
+    background-color: #00b96b;
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 185, 107, 0.3);
 }
 
-.countdown-item .label {
-    font-size: 0.8em; /* Smaller text */
-    color: #00b96b; /* Wise green for labels */
-    text-transform: uppercase;
-    margin-top: 5px; /* Space between number and label */
-}
+
+
 
 /* Footer Styles */
 footer {
@@ -179,9 +168,74 @@ footer {
     padding: 20px 0;
     text-align: center;
     font-size: 0.9em;
-    margin-top: 50px; /* Space above footer */
+    margin-top: auto; /* Push footer to bottom */
 }
 
 footer p {
     margin: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .header .container {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .logo-text {
+        font-size: 20px;
+    }
+    
+    .intro {
+        padding: 40px 0;
+    }
+    
+    .intro-content {
+        gap: 20px;
+    }
+    
+    .profile-image {
+        width: 150px;
+        height: 150px;
+    }
+    
+    .intro p {
+        font-size: 1.1em;
+        padding: 0 15px;
+    }
+    
+    .social-links {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .social-link {
+        padding: 10px 20px;
+        font-size: 0.95em;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo-text {
+        font-size: 18px;
+    }
+    
+    .profile-image {
+        width: 120px;
+        height: 120px;
+    }
+    
+    .intro p {
+        font-size: 1em;
+    }
+    
+    .social-link {
+        padding: 8px 16px;
+        font-size: 0.9em;
+    }
+    
+    .theme-toggle {
+        font-size: 1em;
+        padding: 6px;
+    }
 }

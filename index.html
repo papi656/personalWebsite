@@ -13,59 +13,54 @@
             <div class="logo">
                 <div class="logo-text">Abhishek Pratap Singh</div>
             </div>
-            <nav class="nav">
-                
-                <button class="menu-toggle" aria-label="Toggle navigation">
-                    <div class="hamburger"></div>
-                    <div class="hamburger"></div>
-                    <div class="hamburger"></div>
-                </button>
-            </nav>
+            <button class="theme-toggle" aria-label="Toggle dark/light mode">
+                <span class="theme-icon">
+                    <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: none;">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </span>
+            </button>
         </div>
     </header>
 
     <main>
-        <section class="hero">
+        <section class="intro">
             <div class="container">
-                <h1>Welcome to My Personal Website</h1>
-                <p>Exploring ideas, sharing thoughts, and showcasing projects.</p>
-                
-            </div>
-        </section>
-
-        <section class="countdown-section">
-            <div class="container">
-                <h2>Upcoming Event</h2>
-                <div class="card countdown-card" data-target-date="2025-12-25T00:00:00">
-                    <h3>Sample</h3>
-                    <div class="countdown-display">
-                        <div class="countdown-item">
-                            <span class="value days">00</span>
-                            <span class="label">days</span>
-                        </div>
-                        <div class="countdown-item">
-                            <span class="value hours">00</span>
-                            <span class="label">hours</span>
-                        </div>
-                        <div class="countdown-item">
-                            <span class="value minutes">00</span>
-                            <span class="label">minutes</span>
-                        </div>
-                        <div class="countdown-item">
-                            <span class="value seconds">00</span>
-                            <span class="label">seconds</span>
-                        </div>
+                <div class="intro-content">
+                    <div class="profile-image">
+                        <img src="resources/displayImage.jpeg" alt="Abhishek Pratap Singh">
+                    </div>
+                    <p>I am currently working as an iOS engineer at Rakuten Group in Tokyo, Japan. I completed my Master's degree in Computer Science and Engineering from IIT Guwahati.</p>
+                    <div class="social-links">
+                        <a href="https://github.com/papi656" target="_blank" rel="noopener noreferrer" class="social-link">
+                            GitHub
+                        </a>
+                        <a href="https://www.linkedin.com/in/papi656/" target="_blank" rel="noopener noreferrer" class="social-link">
+                            LinkedIn
+                        </a>
                     </div>
                 </div>
             </div>
         </section>
     </main>
 
-    <script src="script.js"></script>
     <footer>
         <div class="container">
             <p>&copy; 2025 Abhishek Pratap Singh. Version 0.0.1</p>
         </div>
     </footer>
+
+    <script src="theme.js"></script>
 </body>
 </html>
