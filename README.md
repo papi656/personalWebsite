@@ -15,14 +15,21 @@ Live: https://papi656.github.io/personalWebsite/
 | `secret-pathways-assets/fonts.css` | Self-contained WOFF2 subset fonts (Onest, NotoJP, Wordmark), base64-embedded |
 | `secret-pathways-assets/three.min.js` | Three.js runtime (MIT, bundled locally) |
 
-## Missing binary assets
+## Binary assets — procedural workaround
 
-The page references 14 WebP images that are binary and therefore could not be
-carried in the source bundle. Copy each one byte-for-byte from the original
-package into the paths below and verify its SHA-256. The page degrades
-gracefully without them (the procedural WebGL scene and all text still render),
-but the foreground parallax layers and chapter poster backgrounds will not
-appear until they are in place.
+The page originally referenced 14 binary WebP images (chapter poster stills and
+foreground parallax cut-outs) that could not be carried in the source bundle.
+They are now replaced with procedural equivalents so the page is fully
+self-contained:
+
+- **Chapter posters** → layered CSS gradients (one mood per chapter).
+- **Foreground cut-outs** → inline SVG silhouettes embedded as `data:` URIs
+  (temple wall, pine, grass, sakura, maple, stone lantern, bush, basalt,
+  hill, shrine ruins).
+
+The original painted artwork can still be restored by dropping the binary
+files into the paths below and verifying their SHA-256 — the page will use them
+automatically (the `buildCardCloth` effect reads the poster `background-image`).
 
 | Path | Bytes | SHA-256 |
 | --- | ---: | --- |
