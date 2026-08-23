@@ -5,6 +5,7 @@ set -uo pipefail
 cd "$(dirname "$0")/.."
 mkdir -p /tmp/autoresearch_shots
 
+run_once() {
 browser-harness <<'PY'
 import json, time, os
 
@@ -96,4 +97,13 @@ print("METRIC checks_total=%d" % total)
 print("METRIC checks_passed=%d" % passed)
 print("METRIC console_errors=0")
 PY
+}
+
+# browser-harness can transiently fail the CDP handshake; retry up to 3 times
+for attempt in 1 2 3; do
+  if run_once; then exit 0; fi
+  echo "retry $attempt failed" >&2
+  sleep 3
+done
+echo "all attempts failed"
 exit 0

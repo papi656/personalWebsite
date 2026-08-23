@@ -28,6 +28,31 @@
 }
 *,*::before,*::after{box-sizing:border-box}
 html{ -webkit-text-size-adjust:100%; scroll-behavior:auto; }
+
+/* ============================================================= themes
+   Two times of day. Dark (night) is the original palette; light (day) swaps
+   the page tokens for morning paper. The attribute is set by an inline script
+   before first paint — user choice from localStorage wins over the hour of
+   the day, which is only the default. */
+html[data-theme="light"]{
+  --ink:#eceee8;          /* day paper */
+  --ink-2:#e1e4dc;        /* raised paper */
+  --bone:#20251f;         /* ink on paper */
+  --bone-dim:#49514a;
+  --muted:#68706a;
+  --line:rgba(32,37,31,.18);
+  --line-soft:rgba(32,37,31,.10);
+}
+html[data-theme="light"] body{ color-scheme:light; }
+html[data-theme="light"] ::selection{ background:var(--vermilion); color:#fff; }
+html[data-theme="light"] #pre{ background:#eceee8; }
+html[data-theme="light"] .display{ text-shadow:0 2px 34px rgba(255,255,252,.60); }
+html[data-theme="light"] .eyebrow,
+html[data-theme="light"] .body-lg,
+html[data-theme="light"] .body{ text-shadow:0 1px 18px rgba(255,255,252,.80); }
+html[data-theme="light"] #vignette{
+  background:radial-gradient(125% 95% at 50% 42%, transparent 42%, rgba(250,252,246,.42) 100%);
+}
 body{
   margin:0; background:var(--ink); color:var(--bone);
   font-family:'Onest',system-ui,-apple-system,'Helvetica Neue',sans-serif;
@@ -46,6 +71,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
   position:fixed; inset:0; width:100%; height:100%;
   display:block; z-index:0; background:#05070a;
 }
+html[data-theme="light"] #gl{ background:#b9cdd3; }
 #grain{
   position:fixed; inset:-1px; z-index:60; pointer-events:none;
   opacity:.055; mix-blend-mode:overlay;
@@ -155,6 +181,18 @@ h1,h2,h3{ font-weight:400; margin:0; letter-spacing:-.005em; }
 .nav-link.on{ color:var(--bone); }
 .nav-link.on::after{ content:''; position:absolute; left:0; bottom:0; width:100%; height:1px; background:var(--vermilion); }
 .nav-burger{ margin-left:clamp(18px,2.6vw,42px); width:26px; height:16px; position:relative; flex:0 0 auto; }
+
+/* the day/night switch */
+.theme-toggle{
+  margin-left:clamp(18px,2.6vw,42px); width:30px; height:30px; flex:0 0 auto;
+  display:flex; align-items:center; justify-content:center; opacity:.82;
+  transition:opacity .3s var(--ease);
+}
+.theme-toggle:hover{ opacity:1; }
+.theme-toggle svg{ width:17px; height:17px; display:block; }
+.theme-toggle .ic-sun , html[data-theme="dark"]  .theme-toggle .ic-moon{ display:none; }
+html[data-theme="light"] .theme-toggle .ic-sun { display:block; }
+@media (max-width:820px){ .theme-toggle{ margin-left:auto; } .nav-burger{ margin-left:14px; } }
 .nav-burger i{ position:absolute; right:0; height:1.5px; background:var(--bone); transition:width .45s var(--ease-out), transform .45s var(--ease-out); }
 .nav-burger i:nth-child(1){ top:4px; width:26px; }
 .nav-burger i:nth-child(2){ top:11px; width:17px; }
@@ -165,11 +203,12 @@ h1,h2,h3{ font-weight:400; margin:0; letter-spacing:-.005em; }
 .hero{ position:relative; min-height:100svh; padding:0 var(--pad); display:flex; flex-direction:column; }
 .hero::before{ content:''; position:absolute; left:0; right:0; top:0; height:46%; pointer-events:none;
   background:linear-gradient(rgba(3,6,9,.72), rgba(3,6,9,.34) 46%, transparent); }
-.hero-top{ padding-top:calc(var(--nav-h) + clamp(12px,2.6vh,34px)); max-width:min(560px,46vw); position:relative; z-index:2; }
-.hero-top .eyebrow{ display:flex; align-items:center; gap:10px; margin-bottom:20px; }
+.hero-top{ padding-top:calc(var(--nav-h) + clamp(12px,2.6vh,34px)); max-width:min(560px,46vw); position:relative; z-index:2;
+  margin-inline:auto; text-align:center; }
+.hero-top .eyebrow{ display:flex; align-items:center; justify-content:center; gap:10px; margin-bottom:20px; }
 .hero-top .eyebrow .dot{ width:5px; height:5px; border-radius:50%; background:var(--vermilion); box-shadow:0 0 10px var(--vermilion); }
 .hero h1{ margin-bottom:18px; }
-.hero-sub{ max-width:322px; text-shadow:0 1px 26px rgba(3,6,8,.95); }
+.hero-sub{ max-width:322px; margin-inline:auto; text-shadow:0 1px 26px rgba(3,6,8,.95); }
 .hero-spacer{ flex:1 1 auto; min-height:clamp(140px,26vh,300px); }
 .hero-foot{ padding-bottom:clamp(22px,4.2vh,42px); position:relative; z-index:2; }
 .hero-cue{ display:flex; align-items:center; justify-content:flex-end; gap:12px; margin-bottom:14px;
@@ -218,11 +257,6 @@ h1,h2,h3{ font-weight:400; margin:0; letter-spacing:-.005em; }
 .peek-cap i{ font-style:normal; font-size:9px; letter-spacing:.2em; text-transform:uppercase; color:var(--muted); }
 @media (max-width:820px){ .peek{ display:none; } }
 
-.hero-side{
-  position:absolute; z-index:2; right:var(--pad); top:50%; transform:translateY(-50%);
-  display:flex; flex-direction:column; align-items:center; gap:14px; pointer-events:none;
-}
-.hero-side .v{ writing-mode:vertical-rl; font-size:13px; letter-spacing:.62em; color:rgba(223,231,224,.5); }
 @keyframes cue{ 0%{transform:scaleX(0)} 42%{transform:scaleX(1)} 100%{transform:scaleX(1) translateX(100%)} }
 
 /* ============================================================= sections */
@@ -358,7 +392,6 @@ h1,h2,h3{ font-weight:400; margin:0; letter-spacing:-.005em; }
 .no-webgl .card-fr{ background:linear-gradient(150deg,#101a1d,#0a0d10 62%,#1a0c0b); }
 /* If WebGL will not start, the page stays a page: the scene simply becomes a
    still, and the wordmark moves from the 3-D layer into the document. */
-.word-fb{ display:none; }
 .no-webgl #gl, .no-webgl .peek-play{ display:none; }
 /* fixed, or the gradient is measured against a 6000-pixel body box and the
    moon ends up somewhere around the curriculum table */
@@ -368,13 +401,6 @@ h1,h2,h3{ font-weight:400; margin:0; letter-spacing:-.005em; }
   radial-gradient(120% 80% at 50% 0%, rgba(120,150,158,.16), transparent 60%), #05070a;
   background-attachment:fixed; }
 .no-webgl .peek-fr{ background:linear-gradient(160deg,#162326,#0b1013 55%,#241010); }
-.no-webgl .word-fb{
-  display:block; position:absolute; left:0; right:0; bottom:16%; z-index:1;
-  font-family:'Wordmark','Onest',sans-serif; font-weight:600; font-size:21.4vw; line-height:.78;
-  letter-spacing:.052em; text-align:center; pointer-events:none;
-  background:linear-gradient(#e2ece5, #97a89c); -webkit-background-clip:text; background-clip:text;
-  color:transparent;
-}
 /* The live hero has no foot scrim, but the fallback still needs one: there it
    stands on a bright CSS sky rather than a night scene, and the chips and the
    wordmark have nothing else holding them off it. So this carries the whole
@@ -510,7 +536,6 @@ h1,h2,h3{ font-weight:400; margin:0; letter-spacing:-.005em; }
   .nav-burger.active i:nth-child(2){ top:7px; width:26px; transform:rotate(-45deg); }
   html.nav-open,html.nav-open body{ overflow:hidden; }
   .rail{ display:none; }
-  .hero-side{ display:none; }
   .chapters{ grid-template-columns:repeat(2,1fr); gap:18px 14px; }
   .chip p{ font-size:10px; }
   .cards{ grid-template-columns:1fr; gap:14px; }
@@ -536,7 +561,7 @@ h1,h2,h3{ font-weight:400; margin:0; letter-spacing:-.005em; }
      16.11:1 to 16.08:1, all far past what either needs. It was darkening the
      approach, the gate and the lower steps to buy half a point of contrast
      nobody was short of. */
-body[data-layout-hero="b"] .hero-top{ margin-left:0; max-width:min(590px,46vw); }
+body[data-layout-hero="b"] .hero-top{ max-width:min(590px,46vw); }
 body[data-layout-hero="b"] .hero-foot{ width:min(480px,40vw); margin-left:0; }
 body[data-layout-hero="b"] .hero-cue{ justify-content:flex-start; }
 body[data-layout-hero="b"] .chapters{ grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; }
@@ -552,16 +577,6 @@ body[data-layout-hero="b"] .peek{
   left:auto; right:var(--pad); top:auto; bottom:clamp(38px,7vh,96px);
 }
 body[data-layout-hero="b"] .peek-cap b.jp{ font-size:clamp(20px,2.2vw,34px); letter-spacing:.18em; }
-/* The Japanese title reads down the right edge, hung under the navigation —
-   the one mark on that side of the frame now that the romanization has gone. */
-body[data-layout-hero="b"] .hero-side{
-  left:auto; right:var(--pad); top:calc(var(--nav-h) + clamp(14px,3vh,42px));
-  bottom:auto; transform:none; display:block;
-}
-body[data-layout-hero="b"] .hero-side .v{
-  position:static; transform:none;
-  font-size:clamp(30px,3.2vw,54px); letter-spacing:.12em; color:rgba(223,231,224,.62);
-}
 
 /* — story B · spread: the title crosses two columns, the reading column is
      held to the right, and the figures become a ruled band. */
@@ -891,6 +906,20 @@ body[data-layout-footer="b"] .foot-base span:last-child{ text-align:right; }
 <body data-layout-hero="b" data-layout-story="b" data-layout-gallery="b"
       data-layout-curriculum="b" data-layout-closing="b" data-layout-footer="b">
 
+<script>
+/* the theme must be resolved before first paint: stored choice, else the
+   clock — daytime wears light, after dusk wears dark */
+(function () {
+  var t = null;
+  try { t = localStorage.getItem('aps-theme'); } catch (e) {}
+  if (t !== 'light' && t !== 'dark') {
+    var h = new Date().getHours();
+    t = (h >= 7 && h < 18) ? 'light' : 'dark';
+  }
+  document.documentElement.setAttribute('data-theme', t);
+})();
+</script>
+
 <canvas id="gl" aria-hidden="true"></canvas>
 <div id="vignette"></div>
 <div id="grain"></div>
@@ -905,7 +934,7 @@ body[data-layout-footer="b"] .foot-base span:last-child{ text-align:right; }
         <path d="M6 12h32M9.5 17h25M22 8v28" stroke="#dfe7e0" stroke-width="1.2"/>
       </svg>
     </div>
-    <div class="pre-jp jp">APS</div>
+    <div class="pre-jp">Abhishek Pratap Singh</div>
     <div class="pre-bar"><i id="pre-fill"></i></div>
     <div class="pre-meta">
       <span>Preparing the page</span><b><span id="pre-pct">0</span>%</b>
@@ -929,6 +958,15 @@ body[data-layout-footer="b"] .foot-base span:last-child{ text-align:right; }
     <a class="nav-link" href="#lessons" data-cursor><span>Skills</span><span class="alt">Stack</span></a>
     <a class="nav-link" href="#eternity" data-cursor><span>Contact</span><span class="alt">Links</span></a>
   </nav>
+  <button class="theme-toggle" id="themeToggle" data-theme-toggle data-cursor aria-label="Switch colour theme">
+    <svg class="ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
+      <circle cx="12" cy="12" r="4.4"/>
+      <path d="M12 2.6v2.4M12 19v2.4M2.6 12h2.4M19 12h2.4M5.2 5.2l1.7 1.7M17.1 17.1l1.7 1.7M18.8 5.2l-1.7 1.7M6.9 17.1l-1.7 1.7"/>
+    </svg>
+    <svg class="ic-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true">
+      <path d="M20.4 13.6A8.4 8.4 0 0 1 10.4 3.6a8.4 8.4 0 1 0 10 10z"/>
+    </svg>
+  </button>
   <button class="nav-burger" aria-label="Menu" data-cursor><i></i><i></i></button>
 </header>
 
@@ -968,14 +1006,9 @@ body[data-layout-footer="b"] .foot-base span:last-child{ text-align:right; }
          runs on down behind the caption instead of stopping at the frame -->
     <span class="peek-fr" data-frame></span>
     <span class="peek-play"><svg viewBox="0 0 22 22" fill="none"><path d="M8 5.6 16.4 11 8 16.4z" fill="#dfe7e0"/></svg></span>
-    <span class="peek-cap"><b>APS</b><i>India → Japan</i></span>
+    <span class="peek-cap"><b>Abhishek Pratap Singh</b><i>India → Japan</i></span>
   </a>
 
-  <div class="word-fb" aria-hidden="true">APS</div>
-
-  <div class="hero-side" data-rv="up">
-    <span class="v jp">APS</span>
-  </div>
 </section>
 
 <!-- ============================================================ chapter I -->
@@ -1753,29 +1786,50 @@ function texLeaf() {
 
 /* the night sky itself: black at altitude, going to the fog colour at the
    horizon so the backdrop and the depth cue meet without a seam */
-function texSky() {
+function texSky(day) {
   const W = 512, H = 512, c = cvs(W, H), x = c.getContext('2d');
   const g = x.createLinearGradient(0, 0, 0, H);
-  g.addColorStop(0, 'rgb(6,10,15)');    g.addColorStop(.34, 'rgb(13,22,31)');
-  g.addColorStop(.66, 'rgb(17,26,34)'); g.addColorStop(.88, 'rgb(24,35,42)');
-  g.addColorStop(1, 'rgb(14,22,28)');
+  if (day) {
+    /* morning over the valley: pale altitude blue washing into warm haze */
+    g.addColorStop(0, 'rgb(118,162,192)'); g.addColorStop(.34, 'rgb(152,190,210)');
+    g.addColorStop(.66, 'rgb(198,216,218)'); g.addColorStop(.88, 'rgb(226,224,208)');
+    g.addColorStop(1, 'rgb(214,214,200)');
+  } else {
+    g.addColorStop(0, 'rgb(6,10,15)');    g.addColorStop(.34, 'rgb(13,22,31)');
+    g.addColorStop(.66, 'rgb(17,26,34)'); g.addColorStop(.88, 'rgb(24,35,42)');
+    g.addColorStop(1, 'rgb(14,22,28)');
+  }
   x.fillStyle = g; x.fillRect(0, 0, W, H);
   /* cloud, and a low warm bloom off the valley behind the ridge */
-  x.globalAlpha = .34; x.globalCompositeOperation = 'overlay';
+  x.globalAlpha = day ? .20 : .34; x.globalCompositeOperation = 'overlay';
   x.drawImage(fbmCanvas(W, H, 313, 5, 3, .9), 0, 0);
   x.globalAlpha = 1; x.globalCompositeOperation = 'source-over';
-  const wg = x.createRadialGradient(W * .68, H * .95, 4, W * .68, H * .95, W * .44);
-  wg.addColorStop(0, 'rgba(150,66,26,.30)'); wg.addColorStop(.5, 'rgba(96,44,22,.12)');
-  wg.addColorStop(1, 'rgba(0,0,0,0)');
-  x.fillStyle = wg; x.fillRect(0, 0, W, H);
-  /* a scatter of stars, faint enough to survive the bloom */
-  const rnd = mulberry32(881);
-  for (let i = 0; i < 420; i++) {
-    const sx = rnd() * W, sy = rnd() * H * .78, r = .5 + rnd() * rnd() * 1.7;
-    x.fillStyle = 'rgba(214,232,240,' + (.12 + rnd() * .42) * (1 - sy / H) + ')';
-    x.beginPath(); x.arc(sx, sy, r, 0, TAU); x.fill();
+  if (!day) {
+    const wg = x.createRadialGradient(W * .68, H * .95, 4, W * .68, H * .95, W * .44);
+    wg.addColorStop(0, 'rgba(150,66,26,.30)'); wg.addColorStop(.5, 'rgba(96,44,22,.12)');
+    wg.addColorStop(1, 'rgba(0,0,0,0)');
+    x.fillStyle = wg; x.fillRect(0, 0, W, H);
+    /* a scatter of stars, faint enough to survive the bloom */
+    const rnd = mulberry32(881);
+    for (let i = 0; i < 420; i++) {
+      const sx = rnd() * W, sy = rnd() * H * .78, r = .5 + rnd() * rnd() * 1.7;
+      x.fillStyle = 'rgba(214,232,240,' + (.12 + rnd() * .42) * (1 - sy / H) + ')';
+      x.beginPath(); x.arc(sx, sy, r, 0, TAU); x.fill();
+    }
+  } else {
+    /* a high sun bloom, well off the temple's corner */
+    const sg = x.createRadialGradient(W * .18, H * .12, 4, W * .18, H * .12, W * .38);
+    sg.addColorStop(0, 'rgba(255,244,214,.85)'); sg.addColorStop(.25, 'rgba(255,240,204,.28)');
+    sg.addColorStop(1, 'rgba(255,240,204,0)');
+    x.fillStyle = sg; x.fillRect(0, 0, W, H);
   }
   return c;
+}
+const SKY_TEX = {};
+function skyTexture(day) {
+  const k = day ? 'day' : 'night';
+  if (!SKY_TEX[k]) SKY_TEX[k] = tx(texSky(day));
+  return SKY_TEX[k];
 }
 
 /* the wooded ridge the valley closes with — black, ragged, mostly fog */
@@ -2488,9 +2542,10 @@ function buildShell() {
      nothing encloses the frame but the night, the ridge and the fog. */
 
   /* the sky, hung far enough back that the whole frustum sits inside it */
+  const skyDay0 = document.documentElement.getAttribute('data-theme') === 'light';
   const sky = new THREE.Mesh(new THREE.PlaneGeometry(360, 190),
-    new THREE.MeshBasicMaterial({ color: hdr(.60, .70, .80), map: tx(texSky()),
-      depthWrite: false, fog: false, toneMapped: false }));
+    new THREE.MeshBasicMaterial({ color: skyDay0 ? hdr(1.04, 1.01, .96) : hdr(.60, .70, .80),
+      map: skyTexture(skyDay0), depthWrite: false, fog: false, toneMapped: false }));
   sky.position.set(0, 62, -108); sky.renderOrder = 0; scene.add(sky);
   WORLD.sky = sky;
 
@@ -3889,7 +3944,8 @@ function buildCardCloth() {
 }
 
 function buildLights() {
-  scene.add(new THREE.HemisphereLight(0x53838f, 0x060a08, .13));
+  const hemi = new THREE.HemisphereLight(0x53838f, 0x060a08, .13);
+  scene.add(hemi); WORLD.hemi = hemi;
 
   const key = new THREE.DirectionalLight(0xb6dbe4, 1.22);
   key.position.set(2.6, 21, 2.5);
@@ -3909,7 +3965,7 @@ function buildLights() {
   const moonKey = new THREE.DirectionalLight(0xff6a42, .52);
   moonKey.position.set(26, 30, -60);
   moonKey.target.position.set(0, 8, -40); scene.add(moonKey.target);
-  scene.add(moonKey);
+  scene.add(moonKey); WORLD.moonKey = moonKey;
 
   /* The hall's own lamps. They light the podium and the top of the flight and
      nothing else — a range that reaches the roof turns the whole building into
@@ -3919,6 +3975,7 @@ function buildLights() {
   [-1, 1].forEach(s => {
     const w = new THREE.PointLight(0xff8420, 2.2, 11, 2);
     w.position.set(s * 11.4, PODIUM + 1.2, TEMPLE_Z + 5.6); scene.add(w);
+    (WORLD.windowLights = WORLD.windowLights || []).push(w);
   });
 
   /* the moon throws almost nothing, but a trace of red high on the right
@@ -3927,12 +3984,60 @@ function buildLights() {
   moonL.position.set(11.0, 17.0, -24.0); scene.add(moonL); WORLD.moonLight = moonL;
 
   const fill = new THREE.PointLight(0x86c6d2, 0.95, 30, 2);
-  fill.position.set(-1, 13.5, -16.0); scene.add(fill);
+  fill.position.set(-1, 13.5, -16.0); scene.add(fill); WORLD.fillLight = fill;
 
   /* the flight is the spine of the composition — without a lamp of its own it
      falls into the same black as the ground and the eye has nothing to climb */
   const stairL = new THREE.PointLight(0xffa049, 4.2, 17, 2);
-  stairL.position.set(0, 7.6, -26.0); scene.add(stairL);
+  stairL.position.set(0, 7.6, -26.0); scene.add(stairL); WORLD.stairLight = stairL;
+}
+
+/* ------------------------------------------------ the scene's two hours
+   The same temple under two skies. applySceneTheme moves everything that
+   carries the time of day — clear colour, fog, the sky plate, the key and
+   hemisphere lights — between its night and morning values. The lanterns
+   stay lit in daylight, only dimmed: a shrine at noon still burns lamps,
+   they just stop reading as sources. */
+const SCENE_SKY = {
+  dark:  { clear: 0x05070a, fog: 0x050a0e, density: .0168, bg: 0x060a0d, tint: [.60, .70, .80] },
+  light: { clear: 0xb9cdd3, fog: 0xc2d2d4, density: .0130, bg: 0xc7d6d8, tint: [1.04, 1.01, .96] }
+};
+function applySceneTheme(t) {
+  const day = t === 'light', P = day ? SCENE_SKY.light : SCENE_SKY.dark;
+  if (!renderer || !scene) return;
+  renderer.setClearColor(P.clear, 1);
+  if (scene.fog) { scene.fog.color.setHex(P.fog); scene.fog.density = P.density; }
+  if (scene.background && scene.background.isColor) scene.background.setHex(P.bg);
+  if (WORLD.sky) {
+    WORLD.sky.material.map = skyTexture(day);
+    WORLD.sky.material.color.setRGB(P.tint[0], P.tint[1], P.tint[2]);
+    WORLD.sky.material.needsUpdate = true;
+  }
+  if (WORLD.hemi) {
+    WORLD.hemi.intensity = day ? .58 : .13;
+    WORLD.hemi.color.setHex(day ? 0xbfd8e4 : 0x53838f);
+    WORLD.hemi.groundColor.setHex(day ? 0x8a8474 : 0x060a08);
+  }
+  if (WORLD.key) {
+    WORLD.key.intensity = day ? 1.85 : 1.22;
+    WORLD.key.color.setHex(day ? 0xfff1d6 : 0xb6dbe4);
+  }
+  if (WORLD.moonKey) {
+    WORLD.moonKey.intensity = day ? .10 : .52;
+    WORLD.moonKey.color.setHex(day ? 0xffffff : 0xff6a42);
+  }
+  /* the blood moon has no business in a morning sky */
+  if (WORLD.moon) WORLD.moon.visible = !day;
+  if (WORLD.moonHalo) WORLD.moonHalo.visible = !day;
+  if (WORLD.moonLight) WORLD.moonLight.intensity = day ? 0 : 3.0;
+  /* lamps stay lit, but noon swallows them */
+  const lampK = day ? .26 : 1;
+  if (WORLD.hallLight) WORLD.hallLight.intensity = 2.3 * lampK;
+  if (WORLD.windowLights) WORLD.windowLights.forEach(l => l.intensity = 2.2 * lampK);
+  if (WORLD.stairLight) WORLD.stairLight.intensity = 4.2 * lampK;
+  if (WORLD.lanternLights) WORLD.lanternLights.forEach(l => l.userData.baseI == null && (l.userData.baseI = l.intensity));
+  if (WORLD.lanternLights) WORLD.lanternLights.forEach(l => l.intensity = (l.userData.baseI == null ? l.intensity : l.userData.baseI) * lampK);
+  if (WORLD.fillLight) { WORLD.fillLight.intensity = day ? 1.5 : 0.95; WORLD.fillLight.color.setHex(day ? 0xd8e6e2 : 0x86c6d2); }
 }
 /* ====================================================== 6 · planar mirror */
 /* ================================================== 7 · post-processing */
@@ -4744,7 +4849,6 @@ const JOBS = [
     buildTree(75, 16.5, -6.0, .88);
   }],
   ['Painting the near grass', () => buildForeground()],
-  ['Cutting the word', () => buildWordmark()],
   ['Raising the mist', () => { buildAtmosphere(); buildLeafFall(); buildWisps(); }],
   ['Polishing the water', () => {
     initPost(); buildCards(); buildCardCloth();
@@ -4761,9 +4865,21 @@ const JOBS = [
   }]
 ];
 
+function wireTheme() {
+  const btn = $('#themeToggle'); if (!btn) return;
+  const root = document.documentElement;
+  btn.addEventListener('click', () => {
+    const next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('aps-theme', next); } catch (e) {}
+    btn.setAttribute('aria-label', next === 'light' ? 'Switch to night' : 'Switch to day');
+    dispatchEvent(new CustomEvent('themechange', { detail: { theme: next } }));
+  });
+}
+
 function boot() {
   makeGrain();
-  wireReveals(); wireForegroundStages(); wireNav(); wireHeroExit(); wireFocus(); wireCursor();
+  wireReveals(); wireForegroundStages(); wireNav(); wireHeroExit(); wireFocus(); wireCursor(); wireTheme();
   document.body.classList.add('is-locked');
   let i = 0;
   const step = () => {
@@ -4797,6 +4913,8 @@ function fallback(err) {
 
 function start() {
   addEventListener('resize', () => { resize(); }, { passive: true });
+  addEventListener('themechange', e => applySceneTheme(e.detail && e.detail.theme));
+  applySceneTheme(document.documentElement.getAttribute('data-theme'));
   addEventListener('orientationchange', () => setTimeout(resize, 250));
   document.addEventListener('visibilitychange', () => {
     if (document.hidden) { running = false; }
