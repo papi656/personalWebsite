@@ -5,7 +5,7 @@ five-chapter "night walk through a Kyoto mountain temple" rendered live in
 WebGL (Three.js). The scene is generated at runtime: no photographs, no video,
 and no external assets beyond the bundled three.js and two subset fonts.
 
-Live: https://papi656.github.io/personalWebsite/
+Live: https://www.papi656.com
 
 ## Structure
 
